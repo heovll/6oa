@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0866ff">
+<title>Theo dõi 6 Zalo OA</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+main{max-width:520px;margin:28px auto;padding:20px}
+.panel{background:#fff;border-radius:18px;padding:24px;box-shadow:0 8px 28px #17203312}
+h1{font-size:23px;text-align:center;margin:0 0 8px}
+.sub{text-align:center;color:#657087;margin:0 0 22px;font-size:14px}
+.progress{height:7px;background:#e8edf5;border-radius:10px;overflow:hidden;margin:0 0 22px}
+#bar{height:100%;width:16.66%;background:#0866ff;transition:width .2s}
+.count{font-size:13px;color:#657087;text-align:center;margin-bottom:8px}
+h2{text-align:center;font-size:21px;margin:8px 0}
+.desc{text-align:center;color:#657087;font-size:14px;line-height:1.5}
+button{width:100%;border:0;border-radius:12px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;margin-top:12px}
+.primary{background:#0866ff;color:white}.secondary{background:#eef2f8;color:#243047}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.actions button{font-size:14px}
+.note{font-size:12px;color:#68748a;line-height:1.5;margin-top:18px}
+.done{text-align:center;padding:18px 0}
+</style>
+</head>
+<body>
+<main><section class="panel">
+<h1>Theo dõi 6 Zalo OA</h1>
+<p class="sub">Mở từng trang OA, theo dõi rồi quay lại để tiếp tục.</p>
+<div id="content">
+<div class="count" id="count">Trang 1/6</div>
+<div class="progress"><div id="bar"></div></div>
+<h2 id="name"></h2>
+<p class="desc">Nhấn nút bên dưới để mở trang OA. Sau khi theo dõi, quay lại trang này và chọn “Tiếp theo”. Nếu đã theo dõi hoặc muốn bỏ qua, chọn “Bỏ qua (X)”.</p>
+<button class="primary" id="open">Mở trang Zalo OA</button>
+<div class="actions">
+<button class="secondary" id="skip">✕ Bỏ qua</button>
+<button class="secondary" id="next">Đã xong – Tiếp theo</button>
+</div>
+<p class="note">Lưu ý: Trang này không thể tự kiểm tra bạn đã theo dõi OA hay chưa. Bạn tự xác nhận bằng nút “Đã xong – Tiếp theo” hoặc “Bỏ qua”.</p>
+</div>
+<div id="finished" class="done" hidden>
+<h2>Đã đi hết 6 trang OA!</h2><p class="desc">Cảm ơn bạn đã thực hiện.</p>
+<button class="primary" id="restart">Xem lại từ đầu</button>
+</div>
+</section></main>
+<script>
+const pages = [
+  ["XÃ SƠN HÀ", "https://tammi.vn/oa-wall-info?oaId=261016081644"],
+  ["UBND XÃ SƠN HẠ", "https://tammi.vn/oa-wall-info?oaId=260910134596"],
+  ["UBND XÃ SƠN KỲ", "https://tammi.vn/oa-wall-info?oaId=260731113859"],
+  ["XÃ SƠN THỦY", "https://tammi.vn/oa-wall-info?oaId=260929111316"],
+  ["TRƯỜNG THPT QUANG TRUNG", "https://tammi.vn/oa-wall-info?oaId=260820141920"],
+  ["TRƯỜNG THCS - THPT PHẠM KIỆT", "https://tammi.vn/oa-wall-info?oaId=260915085773"]
+];
+let index = 0;
+const nameEl = document.getElementById("name");
+const countEl = document.getElementById("count");
+const bar = document.getElementById("bar");
+const content = document.getElementById("content");
+const finished = document.getElementById("finished");
+function render(){
+  if(index >= pages.length){content.hidden=true;finished.hidden=false;return;}
+  content.hidden=false;finished.hidden=true;
+  nameEl.textContent=pages[index][0];
+  countEl.textContent=`Trang ${index+1}/${pages.length}`;
+  bar.style.width=`${((index+1)/pages.length)*100}%`;
+}
+function advance(){index++;render();}
+document.getElementById("open").addEventListener("click",()=>window.open(pages[index][1],"_blank","noopener"));
+document.getElementById("skip").addEventListener("click",advance);
+document.getElementById("next").addEventListener("click",advance);
+document.getElementById("restart").addEventListener("click",()=>{index=0;render();});
+render();
+</script>
+</body>
+</html>
